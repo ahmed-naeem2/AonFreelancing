@@ -1,6 +1,7 @@
 ﻿using AonFreelancing.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace AonFreelancing.Controllers
 {
@@ -24,7 +25,7 @@ namespace AonFreelancing.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetFreelancer(int id)
+        public IActionResult Get(int id)
         {
             Project pr = _projects.FirstOrDefault(pr => pr.Id == id);
 
@@ -49,14 +50,22 @@ namespace AonFreelancing.Controllers
 
             return NotFound();
         }
-        [HttpPost("{id}")]
-        public IActionResult update([FromBody] Project project)
-        {
-            _projects.Add(project);
-            return CreatedAtAction("Update", new { id = project.Id }, _projects);
+    
+
+        [HttpPut("{id}")]
+        
+        public IActionResult Update(int id, [FromBody]Project Updateproject)
+        { 
+           Project project=_projects.FirstOrDefault(pr=>pr.Id == id);
+            if (project != null)
+            {
+               
+                project.Name=Updateproject.Name;
+                return NoContent();
+
+            }
+            return NotFound();
         }
-
-
 
     }
 }
