@@ -49,19 +49,13 @@ namespace AonFreelancing.Controllers
 
             return NotFound();
         }
-        [HttpPost("{Id}")]
-         public IActionResult Update(int id)
-         {
+        [HttpPost("{id}")]
+        public IActionResult update([FromBody] Project project)
+        {
+            _projects.Add(project);
+            return CreatedAtAction("Update", new { id = project.Id }, _projects);
+        }
 
-             Project pr = _projects.FirstOrDefault(p => p.Id == id);
-             if (pr != null) {
-
-                _projects.Add(pr);
-
-
-             }
-         }
-        
 
 
     }
